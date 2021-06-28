@@ -36,6 +36,6 @@ class Api::V1::AuctionsController < Api::ApplicationController
     params.require(:auction).permit(:title, :description, :reserve_price, :status, :ending)
   end
   def find_auction
-    @auction = auction.find params[:id]
+    @auction = Auction.find params[:id]
   end
 end

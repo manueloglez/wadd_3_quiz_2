@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 const Navbar = ({ currentUser, destroySession }) => {
   return <nav>
     <NavLink to="/">Home</NavLink>
+    <NavLink to="/auctions">Auctions</NavLink>
     {currentUser ? (<>
         <span >Welcome, {currentUser.first_name}</span>
         <button onClick={destroySession}>Sign Out</button>
