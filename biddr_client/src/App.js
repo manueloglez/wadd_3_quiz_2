@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import { User, Session, Auction } from "./requests";
+import { User, Session } from "./requests";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import WelcomePage from './components/WelcomePage'
 import AuctionsIndexPage from './components/AuctionIndexPage';
 import Navbar from './components/Navbar';
 import SignInPage from './components/SignInPage';
+import SignUpPage from './components/SignUpPage';
 import AuctionNewPage from './components/AuctionNewPage';
 import AuthRoute from './components/AuthRoute';
 
@@ -18,6 +19,7 @@ const App = () => {
     return User.current().then(user => {
       if (user?.id) { 
         setState(state => {
+          console.log(user)
           return { user }
         })
       }
@@ -30,23 +32,6 @@ const App = () => {
       });
     });
   }
-  const handleSubmit = (params) => {
-    Session.create(params)
-      .then(() => {
-        return Session.currentUser();
-      })
-      .then((user) => {
-        console.log("user", user);
-        setState((state) => {
-          return { user: user };
-        });
-      });
-  }
-  const onSignOut = () => {
-    setState({
-      user: null
-    })
-  }
   useEffect(() => {
     getCurrentUser()
   }, [])
@@ -58,9 +43,10 @@ const App = () => {
         <AuthRoute path="/auctions/new" 
           isAuthenticated={state.user}
           component={AuctionNewPage}/>
-        <Route path="/auctions/:id" component={AuctionShowPage} />
+        <Route path='/auctions/:id' render={(routeProps)=><AuctionShowPage {...routeProps} currentUser={state.user} />} />
         <Route exact path="/auctions" component={AuctionsIndexPage}/>
         <Route exact path='/sign_in' render={(routeProps)=><SignInPage {...routeProps} onSignIn={getCurrentUser}/>} />
+        <Route exact path='/sign_up' render={(routeProps) => <SignUpPage {...routeProps} onSignUp={getCurrentUser} />} />
         <Route exact path="/" component={WelcomePage}/>
       </Switch>
     </BrowserRouter>

@@ -77,7 +77,19 @@ export const Auction = {
     })
       .then((res) => res.json())
       .catch(console.error);
-  }
+  },
+  update(id, params) {
+    return fetch(`${BASE_URL}/auctions/${id}`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(params),
+    })
+      .then((res) => res.json())
+      .catch(console.error);
+  },
 }
 
 export const Bid = {

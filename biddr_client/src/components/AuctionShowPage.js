@@ -25,11 +25,15 @@ const AuctionShowPage = (props) => {
     })
   }
 
+  const publishAuction = () => {
+    Auction.update(props.match.params.id, {status: 'published'})
+  }
+
   const { bids = [] } = state.auction;
 
   return <main>
-    <AuctionDetails {...state.auction}/>
-    <BidForm createBid={createBid} errors={state.errors}/>
+    <AuctionDetails publishAuction={publishAuction} {...state.auction}/>
+    {props.currentUser && state.auction.status !== 'draft' ? <BidForm createBid={createBid} errors={state.errors}/> : ''}
     <h1>Previous Bids</h1>
     <BidList bids={bids} />
   </main>

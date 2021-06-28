@@ -1,6 +1,6 @@
 class Api::V1::AuctionsController < Api::ApplicationController
-  before_action :find_auction, only: [:show, :destroy]
-  before_action :authenticate_user!, only:[:create, :destroy]
+  before_action :find_auction, only: [:show, :destroy, :update]
+  before_action :authenticate_user!, only:[:create, :destroy, :update]
   
   def index
     auctions = Auction.order created_at: :desc
@@ -26,6 +26,17 @@ class Api::V1::AuctionsController < Api::ApplicationController
     else
       render(
         json: {errors: auction.errors},
+        status: 422
+      )
+    end
+  end
+
+  def update
+    if @auction.update auction_params
+      render json: {id: @auction.id}
+    else
+      render(
+        json: {errors: @auction.errors},
         status: 422
       )
     end

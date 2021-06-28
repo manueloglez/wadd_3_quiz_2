@@ -1,5 +1,5 @@
 class AuctionSerializer < ActiveModel::Serializer
-  attributes(:id, :title, :description, :ending, :reserve_price)
+  attributes(:id, :title, :description, :ending, :reserve_price, :status)
   has_many :bids
 
   class BidSerializer < ActiveModel::Serializer
