@@ -13,6 +13,9 @@ const AuctionsIndexPage = () => {
     })
   }, [])
   return <main>
+    <h1>Auctions <Link to="/newauction">
+      <button>New Auction</button>
+    </Link></h1>
     {state.auctions.map(a => {
       return <Link key={a.id} to={`/auctions/${a.id}`}>
         <div>
@@ -20,9 +23,6 @@ const AuctionsIndexPage = () => {
         </div>
       </Link>
     })}
-    <a href="/auctions/new">
-      <button>New Auction</button>
-    </a>
   </main>
 }
 

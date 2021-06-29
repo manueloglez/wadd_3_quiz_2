@@ -40,14 +40,16 @@ const App = () => {
     <BrowserRouter>
       <Navbar currentUser={state.user} destroySession={destroySession}/>
       <Switch>
-        <AuthRoute path="/auctions/new" 
+        <div className="content">
+        <AuthRoute exact path="/newauction" 
           isAuthenticated={state.user}
           component={AuctionNewPage}/>
-        <Route path='/auctions/:id' render={(routeProps)=><AuctionShowPage {...routeProps} currentUser={state.user} />} />
         <Route exact path="/auctions" component={AuctionsIndexPage}/>
         <Route exact path='/sign_in' render={(routeProps)=><SignInPage {...routeProps} onSignIn={getCurrentUser}/>} />
         <Route exact path='/sign_up' render={(routeProps) => <SignUpPage {...routeProps} onSignUp={getCurrentUser} />} />
+        <Route exact path='/auctions/:id' render={(routeProps)=><AuctionShowPage {...routeProps} currentUser={state.user} />} />
         <Route exact path="/" component={WelcomePage}/>
+        </div>
       </Switch>
     </BrowserRouter>
   </div>
